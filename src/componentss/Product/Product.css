@@ -1,0 +1,23 @@
+.product-container {
+  display: flex;
+  margin-right: 0.6rem;
+  border-bottom: 2px solid gainsboro;
+  margin-bottom: 0.3rem;
+  padding: 0.4rem;
+}
+.product-img {
+  margin-right: 0.5rem;
+}
+
+.product-name {
+  font-weight: 400;
+  color: dodgerblue;
+}
+.cart-btn {
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  background-color: gold;
+  cursor: pointer;
+}
