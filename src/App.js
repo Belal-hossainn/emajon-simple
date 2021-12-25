@@ -1,28 +1,55 @@
-import React from "react";
+import React, { createContext, useState } from 'react';
 import {
-  BrowserRouter as Router, Route, Routes
+  BrowserRouter as Router, Route, Switch
 } from "react-router-dom";
 import './App.css';
-import Header from './componentss/Header/Header';
-import ProductDetail from "./componentss/ProductDetails/ProductDetail";
-import Review from "./componentss/Review/Review";
-import Shop from './componentss/shop/Shop';
-function App() {
+import Header from './components/Header/Header';
+import Inventory from './components/Inventory/Inventory';
+import Login from './components/Login/Login';
+import NotFound from './components/NotFound/NotFound';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import ProductDetail from './components/ProductDetail/ProductDetail';
+import Review from './components/Review/Review';
+import Shipment from './components/Shipment/Shipment';
+import Shop from './components/Shop/Shop';
+
+export const UserContext = createContext();
+
+function App(props) {
+  const [loggedInUser, setLoggedInUser] = useState({});
   return (
-    <div className="App">
-      <Header/>
+    <UserContext.Provider value = {[loggedInUser, setLoggedInUser]}>
+      <h3>email: {loggedInUser?.email}</h3>
       <Router>
-      <Routes>
-      <Route exact path="/" element={<Shop/>}/>
-      <Route exact path="/shop/*" element={<Shop/>}/>
-      <Route exact path="/review" element={<Review/>}/>
-      <Route exact path="/product/:productKey" element={<ProductDetail/>}/>
-          </Routes>
+        <Header></Header>
+        <Switch>
+          <Route path="/shop">
+            <Shop></Shop>
+          </Route>
+          <Route path="/review">
+            <Review></Review>
+          </Route>
+          <PrivateRoute path="/inventory">
+            <Inventory></Inventory>
+          </PrivateRoute>
+          <Route path="/login">
+            <Login></Login>
+          </Route>
+          <PrivateRoute path="/shipment">
+            <Shipment></Shipment>
+          </PrivateRoute>
+          <Route exact path="/">
+            <Shop></Shop>
+          </Route>
+          <Route path="/product/:productKey">
+            <ProductDetail></ProductDetail>
+          </Route>
+          <Route path="*">
+            <NotFound></NotFound>
+          </Route>
+        </Switch>
       </Router>
-      
-      
-     
-    </div>
+    </UserContext.Provider>
   );
 }
 
